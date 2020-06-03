@@ -51,7 +51,7 @@ func (user *User) AddUser2() error{
 	return nil
 }
 
-//
+//获取一条记录
 func (user *User) GetUserByID() (*User,error){
 	//sql语句
 	sqlStr := "select id,username,password,email from users where id=?"
@@ -75,4 +75,37 @@ func (user *User) GetUserByID() (*User,error){
 		Email:    email,
 	}
 	return u,err
+}
+
+//查询全部的记录
+func (user *User) GetUsers() ([]*User,error) {
+	//sql语句
+	sqlStr := "select id,username,password,email from users"
+
+	//执行
+	rows,err := utils.Db.Query(sqlStr)
+	if err != nil{
+		return nil,err
+	}
+	//创建User切片
+	var users []*User
+	for rows.Next(){
+		var id int
+		var username string
+		var password string
+		var email string
+		err := rows.Scan(&id,&username,&password,&email)
+		if err != nil{
+			return nil,err
+		}
+
+		u := &User{
+			ID:       id,
+			Username: username,
+			Password: password,
+			Email:    email,
+		}
+		users = append(users, u)
+	}
+	return users,nil
 }

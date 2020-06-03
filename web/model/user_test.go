@@ -15,12 +15,23 @@ import (
 //	user.AddUser2()
 //}
 
-func TestGetUserById(t *testing.T) {
-	fmt.Println("测试查询一条记录")
-	user := &User{
-		ID:2,
-	}
+//func TestGetUserById(t *testing.T) {
+//	fmt.Println("测试查询一条记录")
+//	user := &User{
+//		ID:2,
+//	}
+//
+//	u,_ := user.GetUserByID()
+//	fmt.Println("得到的User的信息是:",u)
+//}
 
-	u,_ := user.GetUserByID()
-	fmt.Println("得到的User的信息是:",u)
+func TestGetUsers(t *testing.T) {
+	fmt.Println("测试查询所有的记录")
+	user := &User{}
+	us,_ := user.GetUsers()
+
+	//遍历
+	for k,v := range us{
+		fmt.Printf("弟%v个用户是%v\n",k+1,v)
+	}
 }
