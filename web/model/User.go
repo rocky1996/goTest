@@ -50,3 +50,29 @@ func (user *User) AddUser2() error{
 	}
 	return nil
 }
+
+//
+func (user *User) GetUserByID() (*User,error){
+	//sql语句
+	sqlStr := "select id,username,password,email from users where id=?"
+	//执行
+	row := utils.Db.QueryRow(sqlStr,user.ID)
+	//声明
+	var id int
+	var username string
+	var password string
+	var email string
+
+	err := row.Scan(&id,&username,&password,&email)
+	if err != nil{
+		return nil,err
+	}
+
+	u := &User{
+		ID:       id,
+		Username: username,
+		Password: password,
+		Email:    email,
+	}
+	return u,err
+}
