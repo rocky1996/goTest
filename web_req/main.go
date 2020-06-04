@@ -37,7 +37,7 @@ func testJsonRes(w http.ResponseWriter,r *http.Request)  {
 		ID:1,
 		Username: "admin",
 		Password: "123456",
-		Email: "fneucrf@100ta.com",
+		Email: "fneucrf@qq.com",
 	}
 	//将user转换为json格式
 	json,_ := json2.Marshal(user)
