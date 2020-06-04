@@ -30,6 +30,14 @@ func main()  {
 	http.HandleFunc("/Regist",controller.Regist)
 	//去注册
 	http.HandleFunc("/CheckUserName",controller.CheckUserName)
+	//获取所有图书
+	http.HandleFunc("/GetBooks",controller.GetBooks)
+	//删除图书
+	http.HandleFunc("/DeleteBooks",controller.DeleteBooks)
+	//根据id去查找图书
+	http.HandleFunc("/ToUpdateBookPage",controller.ToUpdateBookPage)
+	//更新图书
+	http.HandleFunc("/UpdateBook",controller.UpdateBook)
 
 
 	http.ListenAndServe(":8080",nil)
