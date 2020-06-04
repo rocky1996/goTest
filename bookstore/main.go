@@ -1,6 +1,7 @@
 package main
 
 import (
+	"goTest/bookstore/controller"
 	"html/template"
 	"net/http"
 )
@@ -22,5 +23,14 @@ func main()  {
 	http.Handle("/pages/",http.StripPrefix("/pages/",http.FileServer(http.Dir("/views/pages/"))))
 
 	http.HandleFunc("/main",IndexHandler)
+
+	//去登录
+	http.HandleFunc("/login",controller.Login)
+	//去注册
+	http.HandleFunc("/Regist",controller.Regist)
+	//去注册
+	http.HandleFunc("/CheckUserName",controller.CheckUserName)
+
+
 	http.ListenAndServe(":8080",nil)
 }
