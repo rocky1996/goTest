@@ -2,34 +2,49 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"net/http"
 )
 
-//总票数
-var tickCount = 200
-
-/**
- * 购票
- */
-func buy()  {
-	tickCount = tickCount-1
-}
-
-/**
- * 退票
- */
-func refund()  {
-	tickCount = tickCount+1
-}
-
 func main()  {
-	// 购票协程
-	go refund()
-	// 退票协程
-	go buy()
+	links := []string{
+		"http://www.baidu.com",
+		"http://www.jd.com",
+		"http://www.taobao.com",
+		"http://www.163.com",
+		"http://www.sohu.com",
+	}
 
-	// 为了简单，这里睡眠1秒，等待上面两个协程结束
-	time.Sleep(time.Second * 1)
+	c := make(chan string)
+	for _,link := range links{
+		go checkLink(link,c)
+	}
 
-	fmt.Println(tickCount) // 输出结果是什么？
+	for i:=0;i<len(links);i++{
+		fmt.Println(<-c)
+	}
+	//
+	//fmt.Println(<-c)//等待通道的消息并打印
+	//fmt.Println(<-c)//等待通道的消息并打印
+	//fmt.Println(<-c)//等待通道的消息并打印
+	//fmt.Println(<-c)//等待通道的消息并打印
+	//fmt.Println(<-c)//等待通道的消息并打印
+	//fmt.Println(<-c)//等待通道的消息并打印
 }
+
+func checkLink(link string,c chan string)  {//通道的参数
+	_,err := http.Get(link)
+	if err != nil{
+		fmt.Println(link,"没有连接上")
+		c<-"没有连接上"
+		return
+	}
+	fmt.Println(link,"连接上了")
+	c<-"连接上了"
+}
+
+//go的协程
+
+/*
+ * channel通道,就是实现协程之间的通信
+   c := make(chan string)
+ */
